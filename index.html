@@ -1,176 +1,76 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script>
-      // Define um objeto com os endereços dos nomes selecionados
       var addresses = {
-        "ADRIANO SANTOS FREITAS": "RUA TESTE 123",
-        "ALEX PEREIRA DE OLIVEIRA": "RUA TESTE 123",
-        "ALEX SANDRO TEIXEIRA DOS SANTOS FERREIRA": "RUA TESTE 123",
-        "ANDERSON VICTOR BARBOSA TEIXEIRA": "RUA TESTE 123",
-        "ANDRE SANTOS MUNIZ": "RUA TESTE 123",
-        "ANDRE JOSE DA ROCHA CORDEIRO": "RUA TESTE 123",
-        "ANDRÉ ALVES ARAUJO": "RUA TESTE 123",
-        "ARLEI VIEIRA DA SILVA": "RUA TESTE 123",
-        "BRUNO NASCIMENTO DIAS": "RUA TESTE 123",
-        "CAIO GABRIEL ZUMIOTTI ALVES": "RUA TESTE 123",
-        "DANILO VIEIRA": "RUA TESTE 123",
-        "DIONATAN DOS SANTOS FACCINI": "RUA TESTE 123",
-        "EBER OLIVEIRA DA SILVA BORGES": "RUA TESTE 123",
-        "EDIVALDO CARDOSO DE OLIVEIRA JUNIOR": "RUA TESTE 123",
-        "EDUARDO ROBERTO BARROS GUIMARAES": "RUA TESTE 123",
-        "EMERSON FERREIRA DE OLIVEIRA": "RUA TESTE 123",
-        "FLAVIO GOMES DA CUNHA": "RUA TESTE 123",
-        "GEAN MARCEL FERREIRA": "RUA TESTE 123",
-        "GIOVANNA DA SILVA DE OLIVEIRA": "RUA TESTE 123",
-        "GUILHERME BATISTA DE CASTRO": "RUA TESTE 123",
-        "GUSTAVO DA SILVA BRASIL": "RUA TESTE 123",
-        "HUDSON EDUARTE RAMPAZIO ALVES": "RUA TESTE 123",
-        "IRENILDO LOPES DE OLIVEIRA NETO": "RUA TESTE 123",
-        "IVANILDO JOSE ROCHA COELHO": "RUA TESTE 123",
-        "JACKSON FERREIRA DE ARAUJO": "RUA TESTE 123",
-        "JEFFERSON FURQUIM DE CAMARGO": "RUA TESTE 123",
-        "JOSÉ LUIZ OLIVEIRA SANTANA": "RUA TESTE 123",
-        "LEANDRO ALVES DE ALMEIDA FONSECA": "RUA TESTE 123",
-        "LEONARDO SILVEIRA FERRAZ": "RUA TESTE 123",
-        "LUIS FELIPE CITRO FUJARRA": "RUA TESTE 123",
-        "LUIZ HENRIQUE PEREIRA DE OLIVEIRA": "RUA TESTE 123",
-        "LWESTONY MESQUITA DUARTE": "RUA TESTE 123",
-        "MAICON LIMA DE OLIVEIRA": "RUA TESTE 123",
-        "MACIEL": "RUA TESTE 123",
-        "MARCELO DA ROCHA DE SOUSA": "RUA TESTE 123",
-        "MARCOS GOMES DA FONSECA": "RUA TESTE 123",
-        "MATEUS FERREIRA DE OLIVEIRA": "RUA TESTE 123",
-        "PAULO ROBERTO DO CARMO": "RUA TESTE 123",
-        "PRISCILA BRASIL": "RUA TESTE 123",
-        "RIDICHARLES MATEUS DOS SANTOS": "RUA TESTE 123",
-        "ROGÉRIO LIMA SILVA": "RUA TESTE 123",
-        "VALTER DE OLIVEIRA": "RUA TESTE 123",
-        "VINICIUS FELTRAN CAVALCANTE": "RUA TESTE 123",
-        "VINICIUS OLIVEIRA PIRES": "RUA TESTE 123",
-        "VITOR DE ABREU SILVA": "RUA TESTE 123",
-        "WILLIAN DANIEL MARIANO": "RUA TESTE 123"
+        "NOME1": "ENDEREÇO1",
+        "NOME2": "ENDEREÇO2",
+        "NOME3": "ENDEREÇO3",
+        //...
       };
 
-      // Função para exibir o endereço correspondente quando um nome é selecionado
       function displayAddress(name) {
-        document.getElementById("address").innerHTML = addresses[name];
+        var address = addresses[name];
+        document.getElementById("address").innerHTML = address;
       }
 
-      // Função para exportar os dados dos campos como um arquivo CSV
       function exportData() {
         var name = document.getElementById("name").value;
-        var address = addresses[name];
+        var address = document.getElementById("address").innerHTML;
         var equipment = document.getElementById("equipment").value;
         var quantity = document.getElementById("quantity").value;
         var reason = document.getElementById("reason").value;
 
-        // Cria uma string com os dados dos campos separados por vírgulas
         var data = "NOME:," + name + "\nENDEREÇO:," + address + "\nEQUIPAMENTO:," + equipment + "\nQUANTIDADE:," + quantity + "\nMOTIVO:," + reason;
+        document.getElementById("export-data").innerHTML = data;
+      }
 
-        // Cria um link para baixar o arquivo CSV
-        var link = document.createElement("a");
-        link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(data));
-        link.setAttribute("download", "data.csv");
-        link.click();
+      function copyData() {
+        document.getElementById("export-data").select();
+        document.execCommand("copy");
+        alert("Dados copiados com sucesso!");
       }
     </script>
-    <style>
-    /* Adicionando uma folha de estilo para o formato */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Estilo para o formulário*/
-        .form {
-            margin: 10px;
-        }
-
-        /* Estilo para o botão exportar */
-        .export-btn {
-            background-color: #4CAF50; /* Green */
-            border: none;
-            color: white;
-            padding: 10px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-    </style>
   </head>
   <body>
-    <div class="form">
+    <div class="center-content">
+      <img src="logo.png" alt="Logo" class="logo">
+      <div>
         <label for="name">Nome:</label>
         <select id="name" onchange="displayAddress(this.value)">
-          <option value="">Selecione</option>
-          <option value="ADRIANO SANTOS FREITAS">ADRIANO SANTOS FREITAS</option>
-          <option value="ALEX PEREIRA DE OLIVEIRA">ALEX PEREIRA DE OLIVEIRA</option>
-          <option value="ALEX SANDRO TEIXEIRA DOS SANTOS FERREIRA">ALEX SANDRO TEIXEIRA DOS SANTOS FERREIRA</option>
-          <option value="ANDERSON VICTOR BARBOSA TEIXEIRA">ANDERSON VICTOR BARBOSA TEIXEIRA</option>
-          <option value="ANDRE SANTOS MUNIZ">ANDRE SANTOS MUNIZ</option>
-          <option value="ANDRE JOSE DA ROCHA CORDEIRO">ANDRE JOSE DA ROCHA CORDEIRO</option>
-          <option value="ANDRÉ ALVES ARAUJO">ANDRÉ ALVES ARAUJO</option>
-          <option value="ARLEI VIEIRA DA SILVA">ARLEI VIEIRA DA SILVA</option>
-          <option value="BRUNO NASCIMENTO DIAS">BRUNO NASCIMENTO DIAS</option>
-          <option value="CAIO GABRIEL ZUMIOTTI ALVES">CAIO GABRIEL ZUMIOTTI ALVES</option>
-          <option value="DANILO VIEIRA">DANILO VIEIRA</option>
-          <option value="DIONATAN DOS SANTOS FACCINI">DIONATAN DOS SANTOS FACCINI</option>
-          <option value="EBER OLIVEIRA DA SILVA BORGES">EBER OLIVEIRA DA SILVA BORGES</option>
-          <option value="EDIVALDO CARDOSO DE OLIVEIRA JUNIOR">EDIVALDO CARDOSO DE OLIVEIRA JUNIOR</option>
-          <option value="EDUARDO ROBERTO BARROS GUIMARAES">EDUARDO ROBERTO BARROS GUIMARAES</option>
-          <option value="EMERSON FERREIRA DE OLIVEIRA">EMERSON FERREIRA DE OLIVEIRA</option>
-          <option value="FLAVIO GOMES DA CUNHA">FLAVIO GOMES DA CUNHA</option>
-          <option value="GEAN MARCEL FERREIRA">GEAN MARCEL FERREIRA</option>
-          <option value="GIOVANNA DA SILVA DE OLIVEIRA">GIOVANNA DA SILVA DE OLIVEIRA</option>
-          <option value="GUILHERME BATISTA DE CASTRO">GUILHERME BATISTA DE CASTRO</option>
-          <option value="GUSTAVO DA SILVA BRASIL">GUSTAVO DA SILVA BRASIL</option>
-          <option value="HUDSON EDUARTE RAMPAZIO ALVES">HUDSON EDUARTE RAMPAZIO ALVES</option>
-          <option value="IRENILDO LOPES DE OLIVEIRA NETO">IRENILDO LOPES DE OLIVEIRA NETO</option>
-          <option value="IVANILDO JOSE ROCHA COELHO">IVANILDO JOSE ROCHA COELHO</option>
-          <option value="JACKSON FERREIRA DE ARAUJO">JACKSON FERREIRA DE ARAUJO</option>
-          <option value="JEFFERSON FURQUIM DE CAMARGO">JEFFERSON FURQUIM DE CAMARGO</option>
-          <option value="JOSÉ LUIZ OLIVEIRA SANTANA">JOSÉ LUIZ OLIVEIRA SANTANA</option>
-          <option value="LEANDRO ALVES DE ALMEIDA FONSECA">LEANDRO ALVES DE ALMEIDA FONSECA</option>
-          <option value="LEONARDO SILVEIRA FERRAZ">LEONARDO SILVEIRA FERRAZ</option>
-          <option value="LUIS FELIPE CITRO FUJARRA">LUIS FELIPE CITRO FUJARRA
-          <option value="LUIZ HENRIQUE PEREIRA DE OLIVEIRA">LUIZ HENRIQUE PEREIRA DE OLIVEIRA</option>
-          <option value="LWESTONY MESQUITA DUARTE">LWESTONY MESQUITA DUARTE</option>
-          <option value="MAICON LIMA DE OLIVEIRA">MAICON LIMA DE OLIVEIRA</option>
-          <option value="MACIEL">MACIEL</option>
-          <option value="MARCELO DA ROCHA DE SOUSA">MARCELO DA ROCHA DE SOUSA</option>
-          <option value="MARCOS GOMES DA FONSECA">MARCOS GOMES DA FONSECA</option>
-          <option value="MATEUS FERREIRA DE OLIVEIRA">MATEUS FERREIRA DE OLIVEIRA</option>
-          <option value="PAULO ROBERTO DO CARMO">PAULO ROBERTO DO CARMO</option>
-          <option value="PRISCILA BRASIL">PRISCILA BRASIL</option>
-          <option value="RIDICHARLES MATEUS DOS SANTOS">RIDICHARLES MATEUS DOS SANTOS</option>
-          <option value="ROGÉRIO LIMA SILVA">ROGÉRIO LIMA SILVA</option>
-          <option value="VALTER DE OLIVEIRA">VALTER DE OLIVEIRA</option>
-          <option value="VINICIUS FELTRAN CAVALCANTE">VINICIUS FELTRAN CAVALCANTE</option>
-          <option value="VINICIUS OLIVEIRA PIRES">VINICIUS OLIVEIRA PIRES</option>
-          <option value="VITOR DE ABREU SILVA">VITOR DE ABREU SILVA</option>
-          <div>
-            <label for="address">Endereço:</label>
-            <p id="address"></p>
-        </div>
-        <div>
-            <label for="equipment">Equipamento:</label>
-            <input type="text" id="equipment" required>
-        </div>
-        <div>
-            <label for="quantity">Quantidade:</label>
-            <input type="number" id="quantity" min="1" required>
-        </div>
-        <div>
-            <label for="reason">Motivo:</label>
-            <input type="text" id="reason" required>
-        </div>
-        <div>
-            <button class="export-btn" onclick="exportData()">Exportar</button>
-        </div>
+          <option value="NOME1">NOME1</option>
+          <option value="NOME2">NOME2</option>
+          <option value="NOME3">NOME3</option>
+          //...
+        </select>
+      </div>
+      <div>
+        <label for="address">Endereço:</label>
+        <p id="address"></p>
+      </div>
+      <div>
+        <label for="equipment">Equipamento:</label>
+        <input type="text" id="equipment" required>
+      </div>
+      <div>
+        <label for="quantity">Quantidade:</label>
+        <input type="number" id="quantity" min="1" required>
+      </div>
+      <div>
+        <label for="reason">Motivo:</label>
+        <input type="text" id="reason" required>
+      </div>
+      <div>
+        <button class="export-btn" onclick="exportData()">Exportar</button>
+      </div>
+      <div>
+        <label for="export-data">Dados exportados:</label>
+        <textarea id="export-data" readonly></textarea>
+      </div>
+      <div>
+        <button onclick="copyData()">Copiar dados</button>
+      </div>
     </div>
   </body>
 </html>
