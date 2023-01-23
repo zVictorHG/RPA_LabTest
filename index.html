@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <script>
+      // Define um objeto com os endereços dos nomes selecionados
+      var addresses = {
+        "ADRIANO": "Rua das Flores, 123",
+        "GUSTAVO": "Rua dos Pássaros, 456",
+        "PRISCILA": "Rua das Árvores, 789"
+      };
+
+      // Função para exibir o endereço correspondente quando um nome é selecionado
+      function displayAddress(name) {
+        document.getElementById("address").innerHTML = addresses[name];
+      }
+
+      // Função para exportar os dados dos campos como um arquivo CSV
+      function exportData() {
+        var name = document.getElementById("name").value;
+        var address = addresses[name];
+        var equipment = document.getElementById("equipment").value;
+        var quantity = document.getElementById("quantity").value;
+        var reason = document.getElementById("reason").value;
+
+        // Cria uma string com os dados dos campos separados por vírgulas
+        var data = "NOME:," + name + "\nENDEREÇO:," + address + "\nEQUIPAMENTO:," + equipment + "\nQUANTIDADE:," + quantity + "\nMOTIVO:," + reason;
+
+        // Cria um link para baixar o arquivo CSV
+        var link = document.createElement("a");
+        link.setAttribute("href", "data:text/csv;charset=utf-8," + encodeURIComponent(data));
+        link.setAttribute("download", "data.csv");
+        link.click();
+      }
+    </script>
+    <style>
+    /* Adicionando uma folha de estilo para o formato */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Estilo para o formulário*/
+        .form {
+            margin: 10px;
+        }
+
+        /* Estilo para o botão exportar */
+        .export-btn {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="form">
+        <label for="name">Nome:</label>
+        <select id="name" onchange="displayAddress(this.value)">
+          <option value="">Selecione</option>
+          <option value="ADRIANO">ADRIANO</option>
+          <option value="GUSTAVO">GUSTAVO</option>
+          <option value="PRISCILA">PRISCILA</option>
+        </select>
+        <br>
+        <br>
+        <label for="address">Endereço:</label>
+        <span id="address"></span>
+        <br>
+        <br>
+        <label for="equipment">Equipamento:</label>
+        <input type="text" id="equipment">
+        <br>
+        <br>
+        <label for="quantity">Quantidade:</label>
+        <input type="text" id="quantity">
+        <br>
+        <br>
+        <label for="reason">Motivo:</label>
+        <input type="text" id="reason">
+        <br>
+        <br>
+        <button class="export-btn" onclick="exportData()">Exportar Dados</button>
+    </div>
+  </body>
+</html>
