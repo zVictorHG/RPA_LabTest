@@ -38,7 +38,7 @@ set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/v
 for /F %%I in ('curl.exe --silent %versionURL%') do set "latestVersion=%%I"
 
 REM Comparar a versão atual com a versão mais recente
-if "%latestVersion%" neq "1.0" (
+if "%latestVersion%" neq "1.1" (
   echo Nova versao disponivel!
   echo Iniciando download...
 
