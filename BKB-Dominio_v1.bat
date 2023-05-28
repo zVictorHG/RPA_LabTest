@@ -30,24 +30,23 @@ if '%errorlevel%' NEQ '0' (
     exit
 )
 
-
+:restart
 REM Função para verificar atualizações
-:check_update
-echo Verificando atualizações...
+echo Verificando se ha novas atualizacoes...
 
 REM Fazer o download do arquivo .bat de versão do GitHub
-curl -s -O https://raw.githubusercontent.com/seu_usuario/seu_repositorio/versao/script.bat
+curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/BKB-Dominio_v1.bat
 
 REM Comparar o arquivo atual com o arquivo mais recente
-fc script.bat %~nx0 >nul
+fc BKB-Dominio_v1.bat %~nx0 >nul
 if errorlevel 1 (
-    echo Há uma nova versão disponível. Atualizando...
-    move /y script.bat %~nx0
+    echo Ha uma nova versão disponivel. Atualizando...
+    move /y BKB-Dominio_v1.bat %~nx0
     echo Script atualizado. Reiniciando...
     timeout /t 3 >nul
-    call :restart
+    goto :restart
 ) else (
-    echo Você já possui a versão mais recente.
+    echo Você ja possui a versao mais recente.
     echo Continuando com a execução do script...
     timeout /t 3 >nul
 )
