@@ -40,13 +40,13 @@ curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/BKB-Dominio_v1.bat
 REM Comparar o arquivo atual com o arquivo mais recente
 fc BKB-Dominio_v1.bat %~nx0 >nul
 if errorlevel 1 (
-    echo Ha uma nova versão disponivel. Atualizando...
+    echo Ha uma nova versao disponivel. Atualizando...
     move /y BKB-Dominio_v1.bat %~nx0
     echo Script atualizado. Reiniciando...
     timeout /t 3 >nul
     goto :restart
 ) else (
-    echo Você ja possui a versao mais recente.
+    echo Voce ja possui a versao mais recente.
     echo Continuando com a execução do script...
     timeout /t 3 >nul
 )
