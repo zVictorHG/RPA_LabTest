@@ -17,7 +17,7 @@ echo 			  #################################
 echo 			  #                               #
 echo 			  #     Burger King / Popeyes     #
 echo 			  #       Join Domain Script      #
-echo 			  #             v1.0              #
+echo 			  #             v1.1              #
 echo 			  #                               #
 echo 			  #################################
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
