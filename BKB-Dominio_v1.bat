@@ -9,6 +9,7 @@ color 0E
 cls
 mode con: lines=30 cols=90
 
+
 TITLE BURGER KING - JOIN DOMAIN SCRIPT
 
 REM Solicitar privilégios de administrador
@@ -16,41 +17,37 @@ echo 			  #################################
 echo 			  #                               #
 echo 			  #     Burger King / Popeyes     #
 echo 			  #       Join Domain Script      #
-echo 			  #               v1.0            #
+echo 			  #             v1.0              #
 echo 			  #                               #
 echo 			  #################################
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
 
-REM Verificar se o comando anterior foi executado com sucesso (privilégios de administrador concedidos)
-if '%errorlevel%' NEQ '0' (
-    echo E necessario executar este script como administrador.
-    echo Pressione qualquer tecla para sair...
-    pause >nul
-    exit
+REM Função para verificar atualizações
+echo Verificando atualizações...
+
+REM Fazer o download do arquivo de versão do GitHub
+curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/version.txt
+
+REM Ler a versão mais recente do arquivo de versão
+setlocal enabledelayedexpansion
+for /f "usebackq delims=" %%i in ("version.txt") do (
+    set latestVersion=%%i
 )
 
-set scriptVersion=1.0
-
-:restart
-REM Função para verificar atualizações
-echo Verificando se ha novas atualizacoes...
-
-REM Fazer o download do arquivo .bat de versão do GitHub
-curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/BKB-Dominio_v1.bat
-
-REM Comparar o arquivo atual com o arquivo mais recente
-fc BKB-Dominio_v1.bat %~nx0 >nul
-if errorlevel 1 (
-    echo Ha uma nova versao disponivel. Atualizando...
-    move /y BKB-Dominio_v1.bat %~nx0
+REM Comparar a versão atual com a versão mais recente
+if "%latestVersion%" neq "1.0" (
+    echo Há uma nova versão disponível (v%latestVersion%). Atualizando...
+    curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/BKB-Dominio_v1.bat
     echo Script atualizado. Reiniciando...
     timeout /t 3 >nul
     goto :restart
 ) else (
-    echo Voce ja possui a versao mais recente.
+    echo Você já possui a versão mais recente (v1.0).
+    echo Continuando com a execução do script...
     timeout /t 3 >nul
 )
+
 
 
 REM Definir DNS primário e secundário
