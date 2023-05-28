@@ -27,21 +27,33 @@ set dnsPrimary=10.255.0.110
 set dnsSecondary=8.8.8.8
 
 
+@echo off
+REM Definir DNS primário e secundário
+set dnsPrimary=10.255.0.110
+set dnsSecondary=8.8.8.8
+
 REM Verificar a versão atual do script no GitHub
 setlocal EnableDelayedExpansion
-set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/main/version.txt"
+set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/version.txt"
 for /F %%I in ('curl.exe --silent %versionURL%') do set "latestVersion=%%I"
 
 REM Comparar a versão atual com a versão mais recente
 if "%latestVersion%" neq "1.0" (
   echo Nova versao disponivel!
   echo Iniciando download...
+
+  REM Definir diretório temporário
+  set tempDir=%temp%\script_temp
+
+  REM Criar diretório temporário se não existir
+  if not exist "%tempDir%" mkdir "%tempDir%"
+
   REM Realizar o download do novo script do GitHub
-  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/main/BKB-Dominio_v1.bat"
-  curl.exe --silent --output script_new.bat %scriptURL%
+  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/BKB-Dominio_v1.bat"
+  curl.exe --silent --output "%tempDir%\script_new.bat" %scriptURL%
 
   REM Substituir o script atual pelo novo script
-  move /y script_new.bat BKB-Dominio_v1.bat
+  move /y "%tempDir%\script_new.bat" BKB-Dominio_v1.bat
 
   REM Reabrir o script após a substituição
   call BKB-Dominio_v1.bat
