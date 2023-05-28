@@ -22,37 +22,34 @@ echo 			  #                               #
 echo 			  #################################
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
-
-REM Função para verificar atualizações
-echo Verificando atualizações...
-
-REM Fazer o download do arquivo de versão do GitHub
-curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/version.txt
-
-REM Ler a versão mais recente do arquivo de versão
-setlocal enabledelayedexpansion
-for /f "usebackq delims=" %%i in ("version.txt") do (
-    set latestVersion=%%i
-)
-
-REM Comparar a versão atual com a versão mais recente
-if "%latestVersion%" neq "1.0" (
-    echo Há uma nova versão disponível (v%latestVersion%). Atualizando...
-    curl -s -O https://github.com/zVictorHG/RPA_LabTest/blob/main/BKB-Dominio_v1.bat
-    echo Script atualizado. Reiniciando...
-    timeout /t 3 >nul
-    goto :restart
-) else (
-    echo Você já possui a versão mais recente (v1.0).
-    echo Continuando com a execução do script...
-    timeout /t 3 >nul
-)
-
-
-
 REM Definir DNS primário e secundário
 set dnsPrimary=10.255.0.110
 set dnsSecondary=8.8.8.8
+
+
+REM Verificar a versão atual do script no GitHub
+setlocal EnableDelayedExpansion
+set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/main/version.txt"
+for /F %%I in ('curl.exe --silent %versionURL%') do set "latestVersion=%%I"
+
+REM Comparar a versão atual com a versão mais recente
+if "%latestVersion%" neq "1.0" (
+  echo Nova versao disponivel!
+  echo Iniciando download...
+  REM Realizar o download do novo script do GitHub
+  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/main/BKB-Dominio_v1.bat"
+  curl.exe --silent --output script_new.bat %scriptURL%
+
+  REM Substituir o script atual pelo novo script
+  move /y script_new.bat BKB-Dominio_v1.bat
+
+  REM Reabrir o script após a substituição
+  call BKB-Dominio_v1.bat
+) else (
+  echo Voce possui a versao mais recente.
+)
+
+pause
 
 
 REM Solicitar novo nome do hostname
