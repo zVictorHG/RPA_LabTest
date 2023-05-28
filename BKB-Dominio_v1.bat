@@ -30,6 +30,8 @@ if '%errorlevel%' NEQ '0' (
     exit
 )
 
+set scriptVersion=1.0
+
 :restart
 REM Função para verificar atualizações
 echo Verificando se ha novas atualizacoes...
@@ -47,7 +49,6 @@ if errorlevel 1 (
     goto :restart
 ) else (
     echo Voce ja possui a versao mais recente.
-    echo Continuando com a execução do script...
     timeout /t 3 >nul
 )
 
