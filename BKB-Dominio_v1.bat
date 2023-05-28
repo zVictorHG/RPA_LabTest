@@ -31,6 +31,28 @@ if '%errorlevel%' NEQ '0' (
 )
 
 
+REM Função para verificar atualizações
+:check_update
+echo Verificando atualizações...
+
+REM Fazer o download do arquivo .bat de versão do GitHub
+curl -s -O https://raw.githubusercontent.com/seu_usuario/seu_repositorio/versao/script.bat
+
+REM Comparar o arquivo atual com o arquivo mais recente
+fc script.bat %~nx0 >nul
+if errorlevel 1 (
+    echo Há uma nova versão disponível. Atualizando...
+    move /y script.bat %~nx0
+    echo Script atualizado. Reiniciando...
+    timeout /t 3 >nul
+    call :restart
+) else (
+    echo Você já possui a versão mais recente.
+    echo Continuando com a execução do script...
+    timeout /t 3 >nul
+)
+
+
 REM Definir DNS primário e secundário
 set dnsPrimary=10.255.0.110
 set dnsSecondary=8.8.8.8
