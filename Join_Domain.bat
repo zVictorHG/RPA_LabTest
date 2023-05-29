@@ -47,7 +47,7 @@ echo 			  #################################
 echo 			  #                               #
 echo 			  #     Burger King / Popeyes     #
 echo 			  #       Join Domain Script      #
-echo 			  #             v1.3              #
+echo 			  #             v1.0              #
 echo 			  #                               #
 echo 			  #################################
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
@@ -61,12 +61,15 @@ for /F %%I in ('curl.exe --silent %versionURL%') do set "latestVersion=%%I"
 
 REM Check version
 echo.
-echo ## Verificando se existem novas atualizacoes do script... ##
+echo            ## Verificando se existem novas atualizacoes do script... ##
+ping 127.0.0.1 -n 3 > nul
 
 REM Comparar a versão atual com a versão mais recente
-if "%latestVersion%" neq "1.3" (
-  echo Nova versao disponivel!
-  echo Iniciando download...
+if "%latestVersion%" neq "1.0" (
+  echo          ## Nova versao encontrada!! ##
+  echo.
+  echo          ## Iniciando download...    ##
+ping 127.0.0.1 -n 3 > nul
 
   REM Definir diretório temporário
   set tempDir=%temp%\script_temp
@@ -84,7 +87,7 @@ if "%latestVersion%" neq "1.3" (
   REM Reabrir o script após a substituição
   call BKB-Join-Domain-Script.bat
 ) else (
-  echo Voce possui a versao mais recente.
+  echo                    ## Nao ha novas atualizacacoes disponiveis. ##
 )
 
 REM Definir DNS primário e secundário
