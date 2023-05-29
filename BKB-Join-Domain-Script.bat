@@ -56,7 +56,7 @@ echo 			  #################################
 
 REM Verificar a versão atual do script no GitHub
 setlocal EnableDelayedExpansion
-set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/version.txt"
+set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/bkb_version.txt"
 for /F %%I in ('curl.exe --silent %versionURL%') do set "latestVersion=%%I"
 
 REM Check version
