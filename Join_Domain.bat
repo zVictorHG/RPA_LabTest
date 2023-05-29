@@ -66,9 +66,10 @@ ping 127.0.0.1 -n 3 > nul
 
 REM Comparar a versão atual com a versão mais recente
 if "%latestVersion%" neq "1.0" (
-  echo          ## Nova versao encontrada!! ##
   echo.
-  echo          ## Iniciando download...    ##
+  echo                            ## Nova versao encontrada.. ##
+  echo.
+  echo                            ## Iniciando download...    ##
 ping 127.0.0.1 -n 3 > nul
 
   REM Definir diretório temporário
@@ -78,14 +79,14 @@ ping 127.0.0.1 -n 3 > nul
   if not exist "%tempDir%" mkdir "%tempDir%"
 
   REM Realizar o download do novo script do GitHub
-  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/BKB-Join-Domain-Script.bat"
+  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/Join_Domain.bat"
   curl.exe --silent --output "%tempDir%\script_new.bat" %scriptURL%
 
   REM Substituir o script atual pelo novo script
   move /y "%tempDir%\script_new.bat" BKB-Join-Domain-Scrip.bat
 
   REM Reabrir o script após a substituição
-  call BKB-Join-Domain-Script.bat
+  call Join_Domain.bat
 ) else (
   echo                    ## Nao ha novas atualizacacoes disponiveis. ##
 )
