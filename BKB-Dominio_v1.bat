@@ -10,35 +10,61 @@ cls
 mode con: lines=30 cols=90
 
 
-TITLE BURGER KING - JOIN DOMAIN SCRIPT
+:: BatchGotAdmin
+:-------------------------------------
+REM  --> Check for permissions
+    IF "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
+>nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe" "%SYSTEMROOT%\SysWOW64\config\system"
+) ELSE (
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+)
+
+REM --> If error.
+if '%errorlevel%' NEQ '0' (
+    echo Solicitando privilegios de administrador...
+    goto UACPrompt
+) else ( goto gotAdmin )
+
+:UACPrompt
+    echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+    set params= %*
+    echo UAC.ShellExecute "cmd.exe", "/c ""%~s0"" %params:"=""%", "", "runas", 1 >> "%temp%\getadmin.vbs"
+
+    "%temp%\getadmin.vbs"
+    del "%temp%\getadmin.vbs"
+    exit /B
+
+:gotAdmin
+    pushd "%CD%"
+    CD /D "%~dp0"
+:--------------------------------------
+
+
+TITLE BURGER KING / POPEYES - JOIN DOMAIN SCRIPT
 
 REM Solicitar privilégios de administrador
 echo 			  #################################
 echo 			  #                               #
 echo 			  #     Burger King / Popeyes     #
 echo 			  #       Join Domain Script      #
-echo 			  #             v1.1              #
+echo 			  #             v1.3              #
 echo 			  #                               #
 echo 			  #################################
 >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
 
-REM Definir DNS primário e secundário
-set dnsPrimary=10.255.0.110
-set dnsSecondary=8.8.8.8
 
-
-@echo off
-REM Definir DNS primário e secundário
-set dnsPrimary=10.255.0.110
-set dnsSecondary=8.8.8.8
 
 REM Verificar a versão atual do script no GitHub
 setlocal EnableDelayedExpansion
 set "versionURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/version.txt"
 for /F %%I in ('curl.exe --silent %versionURL%') do set "latestVersion=%%I"
 
+REM Check version
+echo.
+echo ## Verificando se existem novas atualizacoes do script... ##
+
 REM Comparar a versão atual com a versão mais recente
-if "%latestVersion%" neq "1.1" (
+if "%latestVersion%" neq "1.3" (
   echo Nova versao disponivel!
   echo Iniciando download...
 
@@ -49,19 +75,21 @@ if "%latestVersion%" neq "1.1" (
   if not exist "%tempDir%" mkdir "%tempDir%"
 
   REM Realizar o download do novo script do GitHub
-  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/BKB-Dominio_v1.bat"
+  set "scriptURL=https://raw.githubusercontent.com/zVictorHG/RPA_LabTest/source/BKB-Join-Domain-Script.bat"
   curl.exe --silent --output "%tempDir%\script_new.bat" %scriptURL%
 
   REM Substituir o script atual pelo novo script
-  move /y "%tempDir%\script_new.bat" BKB-Dominio_v1.bat
+  move /y "%tempDir%\script_new.bat" BKB-Join-Domain-Scrip.bat
 
   REM Reabrir o script após a substituição
-  call BKB-Dominio_v1.bat
+  call BKB-Join-Domain-Script.bat
 ) else (
   echo Voce possui a versao mais recente.
 )
 
-pause
+REM Definir DNS primário e secundário
+set dnsPrimary=10.255.0.110
+set dnsSecondary=8.8.8.8
 
 
 REM Solicitar novo nome do hostname
