@@ -171,14 +171,15 @@ REM Habilitar o acesso via RDP
 
 REM RDP Verbose
 echo 3. Habilitando acesso remoto via RDP...
-
+ping 127.0.0.1 -n 3 > nul
 
 REM Adicionar a máquina ao domínio usando o PowerShell
 powershell.exe -Command "$password = ConvertTo-SecureString -String '1' -AsPlainText -Force; Add-Computer -DomainName 'bkblojas.local' -Credential 'bkblojas\micros' -PassThru"
 
 echo Maquina inserida ao dominio 'BKBLOJAS.LOCAL'.
+ping 127.0.0.1 -n 1 > nul
 
-shutdown -r -f -t 10
+shutdown -r -f -t 5
 
 
 pause
